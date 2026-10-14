@@ -109,8 +109,13 @@ const paint = (color, s) => `${color}${s}${C.reset}`;
 const visible = (s) => s.replace(/\x1b\[[0-9;]*m/g, '').length;
 
 const out = process.stdout;
+// The window the wizard asks for (open.sh's Terminal window), columns × rows.
+const WINDOW = { cols: 128, rows: 20 };
 const cols = () => out.columns || 80;
-const WIDTH = () => Math.min(70, cols() - 4);
+const rows = () => out.rows || 24;
+const WIDTH = () => Math.min(112, cols() - 8);
+// Under 28 rows every screen drops its spare lines so it fits without scrolling.
+const compact = () => rows() < 28;
 const margin = () => ' '.repeat(Math.max(2, Math.floor((cols() - WIDTH()) / 2)));
 
 const write = (s) => out.write(s);
@@ -123,11 +128,21 @@ function banner(sub) {
     paint(C.bold + C.purple, 'L'), paint(C.bold + C.lilac, 'O'),
     paint(C.bold + C.mint, 'O'), paint(C.bold + C.lime, 'M'),
   ].join('  ');
+  const title = `${loom}    ${paint(C.soft, '1.5')}     ${paint(C.grey, '·')}  ${paint(C.cream, sub)}`;
+  if (compact()) {
+    // One line: ✦ · · ·   L O O M  1.5  ·  sub   · · · ✦
+    const side = Math.max(3, Math.floor((WIDTH() - visible(title) - 6) / 2));
+    const dots = (n) => paint(C.grey, ' ·'.repeat(Math.max(0, Math.floor((n - 1) / 2))));
+    write('\n');
+    line(`${paint(C.violet, '✦')}${dots(side)}   ${title}   ${dots(side)} ${paint(C.violet, '✦')}`);
+    write('\n');
+    return;
+  }
   const stars = paint(C.violet, '✦') + paint(C.grey, '  ·  '.repeat(Math.max(1, Math.floor((WIDTH() - 2) / 5) - 1))) + paint(C.violet, '✦');
   write('\n');
   line(stars);
   line();
-  line(`   ${loom}    ${paint(C.soft, '1.5')}     ${paint(C.grey, '·')}  ${paint(C.cream, sub)}`);
+  line(`   ${title}`);
   line();
   line(stars);
   write('\n');
@@ -283,7 +298,7 @@ async function intro() {
   for (;;) {
     clear();
     banner(STR.title);
-    for (const l of STR.intro) line(paint(C.soft, l));
+    for (const l of wrap(STR.intro.join(' '), WIDTH())) line(paint(C.soft, l));
     write('\n');
     SERVICES.forEach((s, i) => {
       const have = chosen[s.id] ? paint(C.green, `✓ ${STR.origin[chosen[s.id].origin]}`) : '';
@@ -325,12 +340,12 @@ async function serviceStep(s, i, n) {
     banner(`${STR.title}  ·  ${STR.step(i + 1, n)}`);
     const color = s.need === 'required' ? C.lime : C.mint;
     bar(`${padTo(paint(C.bold + C.white, s.title), 16)}${padTo(paint(C.soft, s.role[LANG]), WIDTH() - 36)}${needTag(s.need)}`, color);
-    bar('', color);
-    for (const l of s.why[LANG]) bar(paint(C.soft, l), color);
-    if (s.scopes) { bar('', color); for (const l of wrap(s.scopes[LANG], WIDTH() - 3)) bar(paint(C.grey + C.italic, l), color); }
+    if (!compact()) bar('', color);
+    for (const l of wrap(s.why[LANG].join(' '), WIDTH() - 3)) bar(paint(C.soft, l), color);
+    if (s.scopes) { if (!compact()) bar('', color); for (const l of wrap(s.scopes[LANG], WIDTH() - 3)) bar(paint(C.grey + C.italic, l), color); }
     bar('', color);
     bar(`${paint(C.grey, `${STR.getKey} →`)} ${paint(C.lilac, s.url)}`, color);
-    write('\n');
+    if (!compact()) write('\n');
     const have = chosen[s.id];
     if (have) line(paint(C.green, `✓ ${STR.have} · ${STR.origin[have.origin]}`));
     else if (s.need === 'required') line(paint(C.amber, STR.requiredNote));
@@ -347,7 +362,7 @@ async function serviceStep(s, i, n) {
     if (k === 'enter' && have) return;
     // paste
     for (;;) {
-      write('\n');
+      if (!compact()) write('\n');
       const v = await readLine(STR.pastePrompt, { masked: true });
       line(paint(C.grey, STR.pasteFoot));
       if (v === null) break;
@@ -404,7 +419,9 @@ async function done(results) {
     line(`${paint(C.bold + color, mark)}  ${padTo(paint(C.bold + C.white, s.title), 13)}${padTo(paint(C.soft, s.role[LANG]), 27)}${paint(color, STR.status[r.status])}`);
   }
   write('\n');
-  line(`${paint(C.grey, STR.saved)} ${paint(C.lilac, ENV_FILE)}`);
+  const where = ENV_FILE.startsWith(homedir()) ? `~${ENV_FILE.slice(homedir().length)}` : ENV_FILE;
+  if (visible(`${STR.saved} ${where}`) <= WIDTH()) line(`${paint(C.grey, STR.saved)} ${paint(C.lilac, where)}`);
+  else { line(paint(C.grey, STR.saved)); for (const l of wrap(where.replace(/\//g, '/ '), WIDTH())) line(paint(C.lilac, l.replace(/\/ /g, '/'))); }
   line(paint(C.grey, STR.private));
   write('\n');
   rule(C.violet, '·');
@@ -421,7 +438,15 @@ if (!stdin.isTTY || !out.isTTY) {
 }
 
 write('\x1b]0;Loom · keys\x07');
-if (!process.env.LOOM_NO_RESIZE) write('\x1b[8;36;96t');
+if (!process.env.LOOM_NO_RESIZE) {
+  // Ask the terminal for the wizard's window size, then wait for it to land
+  // (or 300 ms) so the first screen is laid out for the new width.
+  write(`\x1b[8;${WINDOW.rows};${WINDOW.cols}t`);
+  await new Promise((done) => {
+    const t = setTimeout(done, 300);
+    out.once('resize', () => { clearTimeout(t); setTimeout(done, 40); });
+  });
+}
 stdin.setRawMode(true);
 stdin.resume();
 write('\x1b[?25l');
