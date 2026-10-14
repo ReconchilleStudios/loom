@@ -1,0 +1,9 @@
+# Keys: written by tools/keys/wizard.mjs, never committed.
+.env
+.env.*
+!.env.example
+
+node_modules/
+.DS_Store
+*.pending.json
+*.tmp

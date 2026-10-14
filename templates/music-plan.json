@@ -1,0 +1,11 @@
+{
+  "positive_global_styles": ["instrumental", "modern indie electronic pop", "120 BPM", "tight punchy kick", "plucked synth bass", "dry claps on 2 and 4", "short bright synth stabs", "a playful glassy motif", "confident and optimistic", "open mids for a spoken voice", "clean modern mix"],
+  "negative_global_styles": ["vocals", "choir", "spoken word", "EDM white-noise risers", "cinematic trailer booms", "cymbal washes", "lo-fi", "trap hi-hats", "dubstep"],
+  "sections": [
+    { "section_name": "Twelve tabs", "positive_local_styles": ["starts at full pulse on beat one", "ticking sixteenth hi-hats like a counter", "tension building, busier every bar"], "negative_local_styles": ["fade in"], "duration_ms": 5000, "lines": [] },
+    { "section_name": "One place", "positive_local_styles": ["the groove arrives", "four on the floor", "bright glassy motif enters", "confident"], "negative_local_styles": [], "duration_ms": 7000, "lines": [] },
+    { "section_name": "Sales DNA", "positive_local_styles": ["bass opens an octave", "claps enter", "playful stabs answer the motif"], "negative_local_styles": [], "duration_ms": 8000, "lines": [] },
+    { "section_name": "All of it", "positive_local_styles": ["the busiest section", "driving", "a one-bar fill into the last section"], "negative_local_styles": [], "duration_ms": 6000, "lines": [] },
+    { "section_name": "Close", "positive_local_styles": ["a single strong hit on the downbeat", "then a held chord that rings out"], "negative_local_styles": ["abrupt ending"], "duration_ms": 4000, "lines": [] }
+  ]
+}

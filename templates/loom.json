@@ -1,0 +1,27 @@
+{
+  "loom": "1.5",
+  "name": "Brightfold demos",
+  "slug": "brightfold",
+  "status": "research",
+  "created": "2026-10-14",
+  "language": { "session": "tr", "film": "en" },
+  "brief": {
+    "subject": "Affilimates, the operating system for creator-led commerce",
+    "sources": ["<path to the product repo>", "https://affilimates.ai"],
+    "viewer": "Marketing leaders at DTC and e-commerce brands who run creator programs",
+    "destination": "website and sales calls",
+    "reaction": { "30": "I need this.", "120": "This could replace a lot of what we're doing manually." },
+    "script": "docs/brief-script.md"
+  },
+  "truth": "vision-as-product",
+  "deliver": "~/Movies/Loom/brightfold/final",
+  "budget": { "usd": 40, "credits": null },
+  "runs": "windows",
+  "voice": { "model": "eleven_v4" },
+  "versions": [
+    { "id": "30A", "slug": "demo-30a-twelve-places", "title": "Twelve Places", "length_s": 30, "limit_s": 31, "aspect": "1920x1080",
+      "deliverable": "Brightfold 30s A - Twelve Places", "cast": { "narrator": "Sarah EXAVITQu4vr4xnSDxMaL" } },
+    { "id": "30B", "slug": "demo-30b-who-sells-more", "title": "Who Sells More", "length_s": 30, "limit_s": 31, "aspect": "1920x1080",
+      "deliverable": "Brightfold 30s B - Who Sells More", "cast": { "narrator": "Chris iP95p4xoKVk53GoZ742B", "creator": "Jessica cgSgspJ2msm6clMCkdW9" } }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "model": "eleven_v4",
+  "voice": { "name": "Sarah", "id": "EXAVITQu4vr4xnSDxMaL" },
+  "stability": 0.45,
+  "similarity": 0.8,
+  "out": "takes",
+  "display": { "Affili-mates": "Affilimates", "AffiliMates": "Affilimates" },
+  "accept": { "rae": ["ray", "raye"] },
+  "lines": [
+    { "id": "V1", "text": "[confident] Finding creators is easy.", "stability": 0.4 },
+    { "id": "V2", "text": "[curious] Managing creator marketing at scale?", "stability": 0.4 },
+    { "id": "V3", "text": "[softly] That's the problem.", "stability": 0.55 },
+    { "id": "V4", "text": "[warm] [confident] AffiliMates brings your entire creator marketing workflow into one connected platform.", "say": "[warm] [confident] Affili-mates brings your entire creator marketing workflow into one connected platform." },
+    { "id": "V9", "text": "[confident] Match. Create. Sell. Measure.", "stability": 0.4 },
+    { "id": "R1", "text": "[playful] Forty inches of counter.", "voice": { "name": "Jessica", "id": "cgSgspJ2msm6clMCkdW9" } }
+  ]
+}

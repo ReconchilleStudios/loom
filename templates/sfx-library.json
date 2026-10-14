@@ -1,0 +1,13 @@
+[
+  { "name": "ui-click", "text": "a single crisp tactile click of a mouse button, close, dry, no reverb", "seconds": 0.5, "keep": 0.12 },
+  { "name": "card-thunk", "text": "a stiff cardboard card set down flat on a wooden table, soft thud, close, dry", "seconds": 0.6, "keep": 0.36 },
+  { "name": "card-slide", "text": "a paper card sliding quickly across a smooth table, short, dry", "seconds": 0.6, "keep": 0.36 },
+  { "name": "whoosh", "text": "a short dry whoosh, fast air movement past the microphone, no reverb tail", "seconds": 0.6, "keep": 0.46 },
+  { "name": "counter-tick", "text": "a single small mechanical counter tick, very short, dry", "seconds": 0.5, "keep": 0.05, "variants": { "count": 12, "semitones": 0.7 } },
+  { "name": "stamp", "text": "a rubber stamp pressed hard onto paper on a desk, one firm thud, dry", "seconds": 0.8, "keep": 0.5 },
+  { "name": "haptic", "text": "a smartphone vibrating once on a wooden desk, short buzz", "seconds": 0.6, "keep": 0.46 },
+  { "name": "notify", "text": "a soft generic two-note notification chime, gentle, not a phone brand sound", "seconds": 0.8, "keep": 0.6 },
+  { "name": "typing", "text": "a short burst of quiet laptop keyboard typing, five or six keys, close", "seconds": 1.0, "keep": 0.8 },
+  { "name": "tab-click", "text": "a light dry click of a browser tab being clicked, very short", "seconds": 0.5, "keep": 0.12, "variants": { "count": 12, "semitones": 0.7 } },
+  { "name": "low-hit", "text": "one deep soft low impact hit, short, tight, no boom tail", "seconds": 1.0, "keep": 0.95 }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "id": "rae-kitchen-wide",
+    "endpoint": "fal-ai/nano-banana-2/edit",
+    "out": "people/rae-kitchen-wide.png",
+    "usd": 0.08,
+    "input": {
+      "prompt": "The same woman as in the reference photo, keep her exact face, hair and oatmeal knit sweater, filming herself with a phone on a small tripod in a narrow sunlit Portland apartment kitchen, the exact same matte sage-green gooseneck kettle with the light oak handle on the counter, warm natural daylight, photorealistic, no text, no logos",
+      "image_urls": ["file:../shared/people/rae.jpg", "file:../shared/photo/kettle-hero-1920.jpg"],
+      "aspect_ratio": "16:9",
+      "resolution": "2K"
+    }
+  },
+  {
+    "id": "rae-kitchen-wake",
+    "endpoint": "fal-ai/veo3.1/fast/image-to-video",
+    "out": "footage/rae-kitchen-wake.mp4",
+    "usd": 0.9,
+    "input": {
+      "prompt": "she lifts the kettle and pours slowly, steam rises, the camera holds still, natural light",
+      "image_url": "file:people/rae-kitchen-wide.png",
+      "aspect_ratio": "16:9",
+      "duration": "6s",
+      "resolution": "1080p",
+      "generate_audio": false
+    }
+  }
+]

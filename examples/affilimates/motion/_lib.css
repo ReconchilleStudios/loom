@@ -1,0 +1,32 @@
+/* Shared stage + move styles for every scene ("Press & Stack"). Prefix x- so nothing collides with the kit's classes. */
+.x-stage { position: absolute; inset: 0; overflow: hidden; background: #F5F3FF; }
+.x-abs { position: absolute; left: 0; top: 0; }
+.x-full { position: absolute; inset: 0; }
+.x-world { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; transform-origin: 0 0; }
+.x-world.m { width: 390px; height: 844px; }
+.x-world > .kscope { position: absolute; left: 0; top: 0; }
+.x-hide { visibility: hidden; }
+.x-cursor { position: absolute; left: 0; top: 0; width: 17px; height: 25px; margin: -1px 0 0 -2px; z-index: 80; pointer-events: none; transform-origin: 2px 1px; overflow: visible; }
+.x-tap { position: absolute; left: 0; top: 0; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 999px; border: 6px solid #000; background: #fff; box-shadow: 0 0 0 2px #fff; z-index: 80; opacity: 0; }
+/* micro-label pill with an arrow */
+.x-pill { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 12px 0 9px; background: #fff; border: 2px solid #000; border-radius: 999px; box-shadow: 2px 2px 0 #000; font: 700 16px/1 Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #0A0A0A; white-space: nowrap; z-index: 40; }
+.x-pill svg { width: 17px; height: 17px; flex: none; }
+/* outline pulse ring placed over a UI element */
+.x-ring { position: absolute; left: 0; top: 0; border: 3px solid #7614FF; border-radius: 14px; pointer-events: none; z-index: 30; opacity: 0; }
+/* veil over a screen during a LIFT-OUT */
+.x-veil { position: absolute; inset: 0; background: rgba(245, 243, 255, .8); opacity: 0; }
+/* DEAL panels */
+.x-deal { position: absolute; top: -40px; width: 2200px; height: 1160px; border-left: 2px solid #000; z-index: 90; }
+/* supers */
+.x-super { position: absolute; display: inline-flex; align-items: center; gap: 18px; font: 800 70px/1.02 Poppins, sans-serif; letter-spacing: -0.02em; color: #0A0A0A; border: 2px solid #000; border-radius: 18px; box-shadow: 6px 6px 0 #000; padding: 18px 32px 20px; white-space: nowrap; }
+.x-stk { display: inline-block; background: #fff; border: 3px solid #000; border-radius: 10px; box-shadow: 5px 5px 0 #000; padding: 0 16px 4px; transform: rotate(-2.5deg); }
+/* phone */
+.x-phone { position: absolute; left: 0; top: 0; width: 418px; height: 920px; border-radius: 62px; background: #131418; border: 2px solid #000; box-shadow: 10px 10px 0 #000; transform-origin: 50% 50%; }
+.x-phone .scr { position: absolute; left: 14px; top: 14px; width: 390px; height: 892px; border-radius: 48px; overflow: hidden; background: #fff; }
+.x-phone .sb { position: absolute; left: 0; top: 0; width: 390px; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 6px 30px 0 34px; font: 600 16px/1 Inter, sans-serif; color: #000; background: #fff; z-index: 20; }
+.x-phone .sb .isl { position: absolute; left: 50%; top: 11px; width: 118px; height: 32px; margin-left: -59px; border-radius: 20px; background: #131418; }
+.x-phone .sb .ico { display: flex; gap: 6px; align-items: center; }
+.x-phone .page { position: absolute; left: 0; top: 48px; width: 390px; height: 844px; overflow: hidden; }
+/* desktop panel on the BOARD */
+.x-panel { position: absolute; left: 0; top: 0; border: 2px solid #000; border-radius: 18px; box-shadow: 8px 8px 0 #000; overflow: hidden; background: #F5F3FF; }
+.x-tab { font-variant-numeric: tabular-nums; }

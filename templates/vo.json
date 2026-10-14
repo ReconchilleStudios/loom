@@ -1,0 +1,15 @@
+{
+  "lines": "lines.json",
+  "takes": "takes",
+  "out": ".",
+  "lufs": -16,
+  "head": 0.07,
+  "tail": 0.14,
+  "clips": [
+    { "id": "V1", "take": "V1.t2", "at": 0.34, "tempo": 1.15 },
+    { "id": "V2", "take": "V2.t1", "at": 1.94, "tempo": 1.15 },
+    { "id": "V3", "take": "V3.t2", "at": 3.94 },
+    { "id": "V4", "take": "V4.t2", "at": 5.30 },
+    { "id": "V9", "take": "V9.t1", "beats": [26.0, 26.5, 27.0, 27.5] }
+  ]
+}

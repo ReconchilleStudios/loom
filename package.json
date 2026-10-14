@@ -1,0 +1,16 @@
+{
+  "name": "loom",
+  "version": "1.5.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Loom: a film line for Claude Code. Research, concepts, screenplay, ElevenLabs v4 voice and score, HyperFrames build, QC and master.",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "keys": "bash tools/keys/open.sh",
+    "check-keys": "node tools/keys/check.mjs"
+  },
+  "optionalDependencies": {
+    "playwright": "1.58.2"
+  }
+}
