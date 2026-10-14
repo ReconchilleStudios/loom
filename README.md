@@ -33,8 +33,8 @@ The opening screens are designed for the terminal: banners, a progress rail, con
 ## Requirements
 
 - [Claude Code](https://claude.com/claude-code)
-- [HyperFrames](https://github.com/heygen-com/hyperframes) skills: `npx skills add heygen-com/hyperframes` (or its Claude Code plugin)
 - Node 18+ and ffmpeg (`brew install ffmpeg`)
+- Nothing else for the picture: Loom **bundles HyperFrames** (v0.8.140, the version its reference films were made with) and installs it on first run if the machine has none. An existing HyperFrames install or plugin is used as it is.
 - An [ElevenLabs](https://elevenlabs.io) key (required for voiced films), and optionally [fal](https://fal.ai) and [Pexels](https://www.pexels.com/api/) keys
 - Playwright, only if Loom will capture your product's screens: `npm install --prefix ~/.claude/skills/loom && npx --prefix ~/.claude/skills/loom playwright install chromium`
 
@@ -64,13 +64,14 @@ craft/          story, motion, voice, score, truth, HyperFrames integration
 ui/screens.md   how the opening looks in the terminal
 templates/      loom.json, PLAN.md, bible.md, prompt.md, BRIEF.md and tool inputs
 examples/       the reference run: four sales demos, their bible and screenplays
-tools/          keys, voice, score, media, capture, render, master, QC, ledger, launcher
+tools/          keys, HyperFrames install, voice, score, media, capture, render, master, QC, ledger, launcher
+vendor/         HyperFrames v0.8.140 skills (Apache-2.0), installed when a machine has none
 ```
 
 ## Licence
 
-MIT, see `LICENSE`.
+Loom's own files: MIT, see `LICENSE`. `vendor/hyperframes/` is HeyGen's HyperFrames, unmodified, under its own Apache License 2.0 (`vendor/hyperframes/LICENSE`).
 
 ## Credits
 
-The picture engine is [HyperFrames](https://github.com/heygen-com/hyperframes) by HeyGen (Apache-2.0); Loom calls its skills and CLI and does not bundle them. Voice, music, sound effects and transcription: ElevenLabs. Generated stills and motion: fal. Stock footage: Pexels.
+The picture engine is [HyperFrames](https://github.com/heygen-com/hyperframes) by HeyGen (Apache-2.0). Loom bundles its skills unmodified in `vendor/hyperframes/` and runs its CLI from npm at the same version. Voice, music, sound effects and transcription: ElevenLabs. Generated stills and motion: fal. Stock footage: Pexels.

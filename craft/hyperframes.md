@@ -2,7 +2,11 @@
 
 HyperFrames turns HTML compositions into video. Loom uses it for every picture and keeps everything else (the research, the words, the voice, the score, the judgment) to itself. This file says which HyperFrames skill does what at which point of a Loom run, where Loom overrides it, and what the line learned the hard way.
 
-Install HyperFrames once (`npx skills add heygen-com/hyperframes`, or its Claude Code plugin) and keep **one** tree: the standalone skills or the plugin, not both mixed in one run. The plugin's rule is to call the CLI through its own launcher. Set `LOOM_HYPERFRAMES_CLI` for `tools/hf.sh` to that launcher.
+Loom carries HyperFrames (`vendor/hyperframes/`, v0.8.140, Apache-2.0, unmodified). The setup installs it on a machine that has none (`tools/hyperframes/install.mjs`), and HyperFrames itself can also be installed separately. Keep **one** tree: the bundle, a standalone install, or the plugin, not a mix in one run.
+
+- **With the bundle,** `tools/hf.sh` pins the CLI to the bundle's version and sets `HYPERFRAMES_SKIP_SKILLS=1`.
+- **With a standalone install,** it runs the current CLI.
+- **With the plugin,** whose rule is to call the CLI through its own launcher, set `LOOM_HYPERFRAMES_CLI` to that launcher.
 
 ## Who does what
 
@@ -48,6 +52,7 @@ Rules HyperFrames holds and Loom respects:
 - **Render gate.** HyperFrames never renders on passing checks alone. The person's go is the approval, written into `BRIEF.md`. Render only through `tools/render.sh`, which holds the machine lock, and **never from the Studio UI**, which bypasses it.
 - **No silent fallback.** If a Loom voice tool fails, fix it or stop. Never let HyperFrames' local TTS or music fill in.
 - **Telemetry off.** `tools/hf.sh` sets `HYPERFRAMES_NO_TELEMETRY=1` and `DO_NOT_TRACK=1`. Do not run `feedback --rating`: it posts to a public channel.
+- **No skill refresh on the bundle.** `/hyperframes` § 4 and `/general-video`'s first step run `npx hyperframes skills update …`. When the skills carry Loom's `.loom-bundled` marker, skip that step: `general-video` is already installed, and refreshing it would pair newer skills with the pinned CLI. On a standalone install, let it run as HyperFrames intends.
 
 ## What the line hit, and the fix
 

@@ -20,7 +20,8 @@ No dependencies beyond Node 18+ and ffmpeg (Playwright only for `capture/`). Eve
 | `media/fal.mjs` | fal jobs under the ledger, resumable after a drop; `--inputs <endpoint>` shows its parameters |
 | `media/pexels.mjs` | Search to a contact sheet, then download only the chosen clips with credits |
 | `capture/shot.mjs` | Playwright stills of a page, a state or a component, transparent crops |
-| `hf.sh` | The HyperFrames CLI with telemetry off; refuses `render` outside `render.sh` |
+| `hyperframes/install.mjs` | What HyperFrames is installed; `--install` copies the bundled v0.8.140 skills where none exist, never over the person's own |
+| `hf.sh` | The HyperFrames CLI with telemetry off, pinned to the bundle when Loom installed it; refuses `render` outside `render.sh` |
 | `render.sh` | One render at a time on the machine: waits, takes over stale locks, exits with the render's status |
 | `master.mjs` | −14 LUFS / ≤ −1 dBTP, picture copied, measured afterwards, JSON for `qc.md` |
 | `qc/frames.sh` | Every half second on tiled sheets, plus the hard-cut list |

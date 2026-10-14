@@ -1,5 +1,11 @@
 # Loom changelog
 
+## 1.5.1 · 2026-10-14
+
+- **HyperFrames comes with Loom.** `vendor/hyperframes/` carries HeyGen's HyperFrames skills at v0.8.140: the core set and `general-video`, unmodified, Apache-2.0. That is the version the reference films were made with.
+  - On a machine without HyperFrames, the setup installs them (`tools/hyperframes/install.mjs`). It never replaces an install Loom did not make.
+  - While Loom's bundle is in use, `tools/hf.sh` pins the CLI to the same version and stops HyperFrames from refreshing the skills mid-run.
+
 ## 1.5.0 · 2026-10-14
 
 Loom becomes a film line any Claude Code user can run. It turns the process that made the four Affilimates sales demos (2026-10-07) into a skill, and puts HyperFrames inside it as the engine.

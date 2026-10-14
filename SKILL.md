@@ -24,7 +24,7 @@ Questions belong to Act I. After the go Loom decides and reports. It stops only 
 ## Before the first screen
 
 1. Read `ui/screens.md`. Every screen of Act I uses its parts: banner, rail, cards, `diff`-coloured state cards. The person sees designed screens, never walls of plain text.
-2. Run the setup (`stages/0-setup.md`): tools, HyperFrames, and the keys through the key wizard.
+2. Run the setup (`stages/0-setup.md`): tools, HyperFrames (installed from the bundle if the machine has none), and the keys through the key wizard.
 3. Find the run. A folder with `loom.json` above the current directory means a run exists: read its `PLAN.md` and continue from its state. On "continue" or "kaldığım yerden devam", resume the run that has unfinished versions. Otherwise start at `stages/1-brief.md`.
 
 ## What never bends
@@ -70,7 +70,8 @@ Each version owes the run **one signature device** no other version uses: 30A's 
 | `ui/screens.md` | How Act I looks in the terminal |
 | `templates/` | `loom.json`, `PLAN.md`, `bible.md`, `prompt.md` (a version's screenplay), `BRIEF.md`, and the tool inputs |
 | `examples/affilimates/` | The reference run: its bible and its four screenplays |
-| `tools/` | Keys, voice, score, media, capture, render, master, QC, the ledger, the window launcher (`tools/README.md`) |
+| `tools/` | Keys, HyperFrames install, voice, score, media, capture, render, master, QC, the ledger, the window launcher (`tools/README.md`) |
+| `vendor/hyperframes/` | The HyperFrames skills Loom is verified with (v0.8.140, Apache-2.0), installed by the setup when a machine has none |
 
 ## Versions
 

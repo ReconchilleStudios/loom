@@ -12,11 +12,35 @@ Run these quietly and show only what is missing:
 |---|---|---|
 | Node 18+ | `node --version` | Stop: Loom's tools need it. Say how to install it for the person's OS. |
 | ffmpeg + ffprobe | `ffmpeg -version` | Stop. macOS: `brew install ffmpeg`. |
-| HyperFrames skills | `/hyperframes` and `/general-video` are in the skill list | Stop and point to HyperFrames' install (`npx skills add heygen-com/hyperframes`, or the Claude Code plugin). Loom builds every picture with it. |
-| HyperFrames CLI | `<loom>/tools/hf.sh --version` | It installs itself through npx on first use; a failure here is a network or npm problem. |
+| HyperFrames | `node <loom>/tools/hyperframes/install.mjs --json` | Loom carries it. See below. |
+| HyperFrames CLI | `<loom>/tools/hf.sh --version` | It installs itself through npx on first use. A failure here is a network or npm problem. |
 | Chrome for rendering | `<loom>/tools/hf.sh doctor --json` and gate on `.ok` (it always exits 0) | Relay what doctor says. |
 | Playwright (only if the product will be captured) | `node -e "require.resolve('playwright', {paths: ['<loom>']})"` | `npm install --prefix <loom>` then `npx --prefix <loom> playwright install chromium`, with the person's OK (it downloads a browser). |
 | Claude CLI on PATH (only for parallel windows) | `command -v claude` | Versions run one by one in this session instead. |
+
+### HyperFrames
+
+Loom builds every picture with HyperFrames and **carries it**: `vendor/hyperframes/` holds the HyperFrames skills (v0.8.140, Apache-2.0) that Loom is verified with. `install.mjs --json` reports `overall` as one of:
+
+- `standalone`: the person's own install; Loom uses it as it is;
+- `plugin`: the Claude Code plugin; Loom uses it as it is;
+- `bundled`: installed by Loom earlier;
+- `partial`: some skills are missing;
+- `missing`: none are installed.
+
+On `missing` or `partial`, one `AskUserQuestion`:
+
+- **Install the HyperFrames that comes with Loom (Recommended).** The version the reference films were made with. It is copied into `~/.claude/skills/`, works offline and never touches skills already there.
+- **Install the latest from GitHub.** `npx hyperframes skills update general-video`: newer, but not the version Loom was verified with.
+- **Cancel.**
+
+Then run `node <loom>/tools/hyperframes/install.mjs --install --json` (or the GitHub command) and show the result as a state card.
+
+Skills installed during a session may not appear in that session's skill list until Claude Code restarts. That does not stop the run:
+
+- Act I does not use HyperFrames.
+- Production windows are new sessions and see the skills.
+- In a one-session run, read `~/.claude/skills/hyperframes/SKILL.md` and the skills it names directly by path.
 
 ## 2. The keys
 
