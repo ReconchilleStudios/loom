@@ -41,7 +41,7 @@ The opening screens are designed for the terminal: banners, a progress rail, con
 ## Install
 
 ```bash
-git clone https://github.com/egeozcelik/loom ~/.claude/skills/loom
+git clone https://github.com/ReconchilleStudios/loom ~/.claude/skills/loom
 ```
 
 Then in Claude Code: `/loom`. On the first run Loom opens its key wizard in a new terminal window. You can also open it yourself:
