@@ -1,77 +1,130 @@
 # Loom
 
-**A film line for Claude Code.** Loom makes product films, sales demos and launch videos end to end:
+**A film line for Claude Code.** You describe the film. Loom does the rest:
 
-1. It researches the subject from its source.
-2. It pitches screenplay concepts and lets you choose.
-3. It writes a bible and a shot-by-shot screenplay per version.
-4. It voices each version with ElevenLabs v4, directed line by line.
-5. It scores each version on a measured bar grid.
-6. It builds and animates each version on [HyperFrames](https://github.com/heygen-com/hyperframes).
-7. It judges each film frame by frame and delivers it mastered at −14 LUFS.
+1. researches the product;
+2. pitches concepts and lets you choose;
+3. writes a screenplay per version;
+4. voices it with ElevenLabs v4;
+5. scores it;
+6. builds it on HyperFrames;
+7. checks every frame;
+8. delivers a mastered MP4.
 
-You talk to Loom; it decides with you in the opening and works on its own after you say go.
+From zero to your first prompt takes about five minutes.
 
-```
-/loom make a 30-second and a 2-minute sales demo for our app, two versions of each
-```
+---
 
-## What a run looks like
+## 1. Install
 
-| | You | Loom |
-|---|---|---|
-| **Setup** | Paste your keys once, in a separate window | Checks each key with its service (free, or a three-letter ElevenLabs test line); never sees them |
-| **Brief** | Answer a few questions: who watches, what they must think | Reads your product's repo, site and docs first |
-| **Research** | Confirm the findings | The dossier: what is true only of your product, the moments of it that move on screen, one story world, a claims register |
-| **Concepts** | Pick one concept per version from cards | Five or six concepts forced apart by structure, judged by three independent readers |
-| **Design** | Choose format, voices, truth mode, folder, budget, then **go** | Plates, a series bible, a screenplay per version timed to the tenth of a second, two cold table reads |
-| **Production** | Nothing, or watch the windows | One Claude Code window per version, in parallel, one render at a time |
-| **Closing** | Watch the films | Gates on the master, three cold viewers, fix rounds, master, delivery, a report |
-
-The opening screens are designed for the terminal: banners, a progress rail, concept cards with the structure drawn to scale, and colour-coded states.
-
-## Requirements
-
-- [Claude Code](https://claude.com/claude-code)
-- Node 18+ and ffmpeg (`brew install ffmpeg`)
-- Nothing else for the picture: Loom **bundles HyperFrames** (v0.8.140, the version its reference films were made with) and installs it on first run if the machine has none. An existing HyperFrames install or plugin is used as it is.
-- An [ElevenLabs](https://elevenlabs.io) key (required for voiced films), and optionally [fal](https://fal.ai) and [Pexels](https://www.pexels.com/api/) keys
-- Playwright, only if Loom will capture your product's screens: `npm install --prefix ~/.claude/skills/loom && npx --prefix ~/.claude/skills/loom playwright install chromium`
-
-## Install
+You need [Claude Code](https://claude.com/claude-code), Node 18+ and ffmpeg.
 
 ```bash
+brew install node ffmpeg          # macOS; on Linux use your package manager
 git clone https://github.com/ReconchilleStudios/loom ~/.claude/skills/loom
 ```
 
-Then in Claude Code: `/loom`. On the first run Loom opens its key wizard in a new terminal window. You can also open it yourself:
+That's all. HyperFrames, the picture engine, ships inside Loom (`vendor/hyperframes`). It is installed on the first run if your machine doesn't have it.
+
+To update later: `git -C ~/.claude/skills/loom pull`
+
+## 2. Open Claude Code, type `/loom`
+
+Start Claude Code in any folder and type `/loom`.
+
+![Claude Code lists /loom](docs/images/claude-1-loom.png)
+
+## 3. Add your keys
+
+On the first run Loom checks the machine, installs HyperFrames if needed, and asks to open the key window. Say yes. A separate terminal window opens:
+
+![The key window: three services, one required](docs/images/keys-1-intro.png)
+
+Paste each key. It is masked, checked against its service and saved to `~/.claude/skills/loom/.env` (mode 600, never committed). Claude never sees a key, only whether it works.
+
+![Pasting the ElevenLabs key, masked](docs/images/keys-2-elevenlabs.png)
+
+| Service | What it does in your film | Need | Get a key |
+|---|---|---|---|
+| ElevenLabs | The narrator, the music, the sound effects, the word timings | **Required** | [elevenlabs.io/app/settings/api-keys](https://elevenlabs.io/app/settings/api-keys) |
+| fal.ai | Generated people, scenes, image-to-video | Recommended | [fal.ai/dashboard/keys](https://fal.ai/dashboard/keys) |
+| Pexels | Stock footage | Free, recommended | [pexels.com/api/new](https://www.pexels.com/api/new/) |
+
+Close the window, go back to Claude Code and choose **Check keys**.
+
+You can open the window yourself at any time:
 
 ```bash
-bash ~/.claude/skills/loom/tools/keys/open.sh        # or: node tools/keys/wizard.mjs
-node ~/.claude/skills/loom/tools/keys/check.mjs      # works / rejected / skipped, never the key
+bash ~/.claude/skills/loom/tools/keys/open.sh
 ```
 
-## Keys and privacy
+## 4. Write the prompt
 
-Keys are written to `~/.claude/skills/loom/.env` with mode 600. The file is git-ignored. Claude never reads it, prints it or copies it; it learns only whether each key works. Every paid call is written to the run's `ledger.jsonl` before it is sent, and refused if it would cross the budget you set at the go.
+![A Loom prompt](docs/images/claude-2-prompt.png)
 
-## Layout
+A good prompt says four things:
 
+1. **What it's about,** and where Loom can learn it: a repo path, a URL, docs.
+2. **Who watches:** customers in a sales call, investors, a social feed.
+3. **How many and how long:** "two 30-second versions", "a 30 s and a 2 min".
+4. **Anything fixed:** a script to use word for word, a line that must be said.
+
+```text
+/loom make a 30-second and a 2-minute sales demo for my app, two versions of each. The code is in ~/code/my-app.
+/loom a 60-second launch video for https://example.com for investors. Use this script: "…"
+/loom three 15-second vertical cuts for Instagram from the app in ~/code/my-app
 ```
-SKILL.md        the contract: the three acts, what never bends
-stages/         0-setup … 6-closing: what happens, what it writes, the gate
-craft/          story, motion, voice, score, truth, HyperFrames integration
-ui/screens.md   how the opening looks in the terminal
-templates/      loom.json, PLAN.md, bible.md, prompt.md, BRIEF.md and tool inputs
-examples/       the reference run: four sales demos, their bible and screenplays
-tools/          keys, HyperFrames install, voice, score, media, capture, render, master, QC, ledger, launcher
-vendor/         HyperFrames v0.8.140 skills (Apache-2.0), installed when a machine has none
-```
 
-## Licence
+## 5. What happens next
 
-Loom's own files: MIT, see `LICENSE`. `vendor/hyperframes/` is HeyGen's HyperFrames, unmodified, under its own Apache License 2.0 (`vendor/hyperframes/LICENSE`).
+Loom asks before it spends anything:
 
-## Credits
+1. **Brief.** It confirms who the film is for and what they must think when it ends.
+2. **Research.** It reads your code and site and shows you what it found.
+3. **Concepts.** You pick one per version from 5–6 cards.
+4. **Versions.** You choose format, voices, what may be shown, where the films go and the budget, then **Start**.
 
-The picture engine is [HyperFrames](https://github.com/heygen-com/hyperframes) by HeyGen (Apache-2.0). Loom bundles its skills unmodified in `vendor/hyperframes/` and runs its CLI from npm at the same version. Voice, music, sound effects and transcription: ElevenLabs. Generated stills and motion: fal. Stock footage: Pexels.
+After Start it works alone: one window per version, one render at a time. The finished MP4 and `.srt` files land in the folder you chose.
+
+---
+
+## Best for Loom 1.5
+
+**Made for:** product films where software is the star.
+
+- SaaS and app **sales demos**, 30 seconds to 2 minutes
+- **Launch videos** and feature explainers built from real product screens
+- **A/B versions** of one message: two stories with the same close, at two lengths
+- **Vision demos** of screens not built yet, rebuilt from the product's own design system; you decide how they're labelled
+- Motion-design films with a voiceover, where every click, counter and transition lands on a spoken word
+
+**Not the best fit:**
+
+- live-action stories with actors;
+- long documentaries (6+ minutes);
+- talking-head edits;
+- music videos;
+- brand films with no product on screen.
+
+HyperFrames has workflows for some of these, but Loom's rulebook is tuned for product films.
+
+**Under the hood**
+
+| | |
+|---|---|
+| Picture | HyperFrames v0.8.140 (bundled): HTML + GSAP compositions rendered to H.264 MP4, 1920×1080 / 1080×1920 / 1080×1080, 30 fps |
+| Voice | ElevenLabs `eleven_v4` / `eleven_v4_turbo`, directed with audio tags; auditions, two takes per line, every take transcribed back and compared with the script; each line levelled to −16 LUFS |
+| Score | ElevenLabs Music from a plan that follows the film's acts; tempo and bars measured, the bed cut on the bar grid; the music never drops out under the voice |
+| Sound | A generated effects library, cleaned automatically and mixed into one stem per film; the music carved under the voice |
+| Media | fal (stills from reference photos, image-to-video), Pexels stock footage, Playwright stills of your product |
+| Master | −14 LUFS integrated, ≤ −1 dBTP, AAC 48 kHz, plus a voice-only `.srt` |
+| QC | HyperFrames lint and layout checks, a contact sheet of every scene, frames every 0.5 s, a speech-to-text check of the master, every claim checked against sources, three subagent viewers who haven't seen the plan |
+| Parallel runs | One Claude Code window per version; a machine-wide lock keeps it to one render at a time |
+| Cost | Every paid call is logged before it runs and refused beyond the budget you set |
+| Platforms | macOS and Linux |
+
+**The reference run** (`examples/affilimates/`): four sales demos (2 × 30 s, 2 × 2 min) made in parallel with the process Loom 1.5 is built from. Each took 42–74 minutes from prompt to master, and renders took 25 s to 2.5 min. Their bible and screenplays are the standard Loom holds every film to.
+
+---
+
+MIT licence (`LICENSE`). `vendor/hyperframes/` is HeyGen's [HyperFrames](https://github.com/heygen-com/hyperframes), unmodified, under Apache-2.0.
